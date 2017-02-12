@@ -3,6 +3,7 @@ package com.busybox.topicmonkey.service.impl;
 import com.busybox.topicmonkey.domain.model.User;
 import com.busybox.topicmonkey.domain.repository.UserRepository;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -48,11 +49,11 @@ public class UserServiceImplTest {
     }
 
     @Test
+    @Ignore("enable after updating UserRepository")
     public void shouldFindByLoginName() throws Exception {
-/*
         // given
         User user = prepareUser();
-        when(repository.findByLoginName(user.getLoginName())).thenReturn(user);
+        //when(repository.findByLoginName(user.getLoginName())).thenReturn(user);
 
         // when
         User resultUser = service.findByLoginName(user.getLoginName());
@@ -60,7 +61,6 @@ public class UserServiceImplTest {
         // then
         assertEquals(user.getLoginName(), resultUser.getLoginName());
         assertEquals(user.getEmailAddress(), resultUser.getEmailAddress());
-*/
     }
 
     @Test(expected = IllegalArgumentException.class)

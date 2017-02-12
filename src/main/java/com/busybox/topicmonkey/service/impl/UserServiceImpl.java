@@ -25,6 +25,8 @@ public class UserServiceImpl extends TransactionalService<User, Long>
     public User findByLoginName(String loginName) {
         Assert.hasLength(loginName);
         log.debug("Searching user by loginName: {}", loginName);
+
+        // TODO: update after repository
 //        return repository.findByLoginName(loginName);
         return null;
     }
