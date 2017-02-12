@@ -1,21 +1,12 @@
 package com.busybox.topicmonkey.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.hateoas.ResourceSupport;
 import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
-public class Topic extends ResourceSupport {
+public class Topic extends AbstractEntity {
+    private static final long serialVersionUID = -3926810136371349946L;
 
     private String name;
     private String content;
-
-    @JsonCreator
-    public Topic(@JsonProperty("name") String name, @JsonProperty("content") String content) {
-        this.name = name;
-        this.content = content;
-    }
 
     private Topic(Builder builder) {
         this.name = builder.name;
@@ -35,10 +26,11 @@ public class Topic extends ResourceSupport {
     }
 
     public static class Builder {
-        private static final String DEFAULT_CONTENT = "default content";
-
         private String name;
         private String content;
+
+        private Builder() {
+        }
 
         public Builder withName(String name) {
             this.name = name;
@@ -56,10 +48,7 @@ public class Topic extends ResourceSupport {
         }
 
         private void verify() {
-            Assert.isTrue(!StringUtils.isEmpty(name), "name should not be empty");
-            if (StringUtils.isEmpty(content)) {
-                content = DEFAULT_CONTENT;
-            }
+            Assert.hasLength(name);
         }
     }
 }

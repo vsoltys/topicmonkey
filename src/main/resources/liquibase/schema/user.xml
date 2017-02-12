@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <!--TODO: update model and add audit support-->
+
+    <changeSet id="user.1" author="system">
+        <createTable tableName="user">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login_name" type="varchar(50)"/>
+            <column name="email_address" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="user.2" author="system">
+        <insert tableName="user">
+            <column name="login_name" value="bender_rodrigues"/>
+            <column name="email_address" value="onlybender@futur.ama"/>
+        </insert>
+
+        <insert tableName="user">
+            <column name="login_name" value="phillip.fry"/>
+            <column name="email_address" value="oldfry@futur.ama"/>
+        </insert>
+
+        <sql>
+            insert into user (login_name, email_address)
+            values('doctorZoidberg', 'zoidberg@futur.ama');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

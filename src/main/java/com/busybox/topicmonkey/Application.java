@@ -1,12 +1,10 @@
-package com.busybox.topicmonkey.application;
+package com.busybox.topicmonkey;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.busybox.topicmonkey"})
 public class Application {
 
     public static void main(String[] args) {
