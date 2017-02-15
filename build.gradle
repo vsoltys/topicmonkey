@@ -1,0 +1,71 @@
+buildscript {
+    ext {
+        springBootVersion = "1.5.1.RELEASE"
+        h2databaseVersion = "1.4.191"
+        liquibaseVersion = "3.4.1"
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://repo.maven.apache.org/maven2"
+        }
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "org.liquibase:liquibase-core:${liquibaseVersion}"
+        classpath "org.liquibase:liquibase-gradle-plugin:1.2.1"
+        classpath "com.h2database:h2:${h2databaseVersion}"
+    }
+}
+
+apply plugin: "java"
+apply plugin: "org.springframework.boot"
+apply plugin: "liquibase"
+apply plugin: "idea"
+
+jar {
+    baseName = "topic-monkey"
+    group = "com.busybox.topicmonkey"
+    version = "0.1.0-SNAPSHOT"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://repo.maven.apache.org/maven2"
+    }
+}
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-starter-batch"
+    compile "org.springframework.boot:spring-boot-starter-hateoas"
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-devtools"
+
+    compile "com.h2database:h2"
+    compile "com.zaxxer:HikariCP:2.5.1"
+    compile "org.liquibase:liquibase-core:3.4.1"
+    compile "joda-time:joda-time:1.4"
+    compile "joda-time:joda-time-hibernate:1.4"
+
+    testCompile "junit:junit"
+    testCompile "org.mockito:mockito-core:1.+"
+    testCompile "org.springframework.batch:spring-batch-test"
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.1.RELEASE'
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile "$projectDir/src/main/resources/database/changelog/db.changelog-master.xml"
+            url "jdbc:h2:mem:testdb"
+            username "sa"
+            password "sa"
+        }
+    }
+}
