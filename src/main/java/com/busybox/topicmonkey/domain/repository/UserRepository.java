@@ -10,7 +10,7 @@ import java.util.Optional;
 
 /**
  * Specifies methods used to obtain and modify User related information
- * which is stored in the database.
+ * in the database.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
