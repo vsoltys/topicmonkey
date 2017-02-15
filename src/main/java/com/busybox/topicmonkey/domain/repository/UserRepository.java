@@ -2,14 +2,18 @@ package com.busybox.topicmonkey.domain.repository;
 
 import com.busybox.topicmonkey.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * Specifies methods used to obtain and modify User related information
  * which is stored in the database.
  */
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
 
     /**
      * Finds user by using the login name as a search criteria.
@@ -20,6 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
 
     //TODO: named query or method level? native?
-//    @Query("SELECT u FROM tm_user u WHERE u.login_name=:loginName")
-//    User findByLoginName(@Param("loginName") String loginName);
+    @Query(value = "SELECT u FROM user u WHERE u.login_name=:loginName", nativeQuery = true)
+    Optional<User> findByLoginName(@Param("loginName") String loginName);
 }

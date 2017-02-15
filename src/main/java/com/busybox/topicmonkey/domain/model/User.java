@@ -7,14 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tm_user")
-public class User extends AbstractEntity {
-    private static final long serialVersionUID = 6770553344586829213L;
+@Table(name = "USER")
+public class User
+        extends AbstractEntity {
 
-    @Column(name = "login_name", nullable = false, unique = true)
+    @Column(name = "LOGIN_NAME", nullable = false, unique = true)
     private String loginName;
 
-    @Column(name = "email_address", nullable = false)
+    @Column(name = "EMAIL_ADDRESS", nullable = false, unique = true)
     private String emailAddress;
 
     private User(Builder builder) {
@@ -22,7 +22,8 @@ public class User extends AbstractEntity {
         this.emailAddress = builder.emailAddress;
     }
 
-    protected User() {
+    private User() {
+        // jpa
     }
 
     public static Builder builder() {
@@ -42,8 +43,31 @@ public class User extends AbstractEntity {
     }
 
     @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + loginName.hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof User))
+            return false;
+        if (!super.equals(o))
+            return false;
+
+        User user = (User) o;
+        return loginName.equals(user.loginName);
+    }
+
+    @Override
     public String toString() {
-        return "User[id=" + getId() + ", loginName='" + loginName + "']";
+        final StringBuilder builder = new StringBuilder("User{");
+        builder.append("loginName='").append(loginName).append('\'');
+        builder.append('}');
+        return builder.toString();
     }
 
     public static class Builder {

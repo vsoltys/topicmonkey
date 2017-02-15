@@ -1,6 +1,6 @@
 package com.busybox.topicmonkey.rest.controller;
 
-import com.busybox.topicmonkey.domain.model.Topic;
+import com.busybox.topicmonkey.domain.model.SearchEntry;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TopicController {
 
-    // TODO: update after Topic entity stack
+    // TODO: update after SearchEntry entity stack
     @RequestMapping(value = "/topic", method = RequestMethod.GET)
-    public HttpEntity<Topic> getTopic(@RequestParam(value = "name", required = false,
+    public HttpEntity<SearchEntry> getTopic(@RequestParam(value = "name", required = false,
             defaultValue = "new topic") String name) {
-        Topic topic = Topic.builder().withName(name).build();
-        //topic.add(linkTo(methodOn(TopicController.class).getTopic(name)).withSelfRel());
+        SearchEntry searchEntry = SearchEntry.builder().withName(name).build();
+        //searchEntry.add(linkTo(methodOn(TopicController.class).getTopic(name)).withSelfRel());
 
-        return new ResponseEntity(topic, HttpStatus.OK);
+        return new ResponseEntity(searchEntry, HttpStatus.OK);
     }
 }

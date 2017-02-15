@@ -1,62 +1,118 @@
 package com.busybox.topicmonkey.domain.model;
 
-import com.busybox.topicmonkey.domain.SystemException;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import static com.busybox.topicmonkey.domain.utils.UniqueIdGenerator.uniqueId;
+import static java.time.LocalDateTime.now;
 
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity
+        implements Serializable {
+
+    private static final String SYSTEM = "SYSTEM";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private long id;
+    @Column(name = "ID")
+    private String id;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    @Version
+    @Column(name = "VERSION")
+    private Long version;
 
-    @Column(name = "created_by")
+    @Column(name = "CREATED_AT")
+    private LocalDateTime createdAt;
+
+    @Column(name = "CREATED_BY")
     private String createdBy;
 
-    // TODO: add audit support
+    @Column(name = "UPDATED_AT")
+    private LocalDateTime updatedAt;
 
-    @Column(name = "state", nullable = false)
+    @Column(name = "UPDATED_BY")
+    private String updatedBy;
+
+/*
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATE", nullable = false)
     private EntityState state = EntityState.ACTIVE;
+*/
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public Long getVersion() {
+        return version;
     }
 
-    public EntityState getState() {
-        return state;
-    }
-
-    public void onDelete() throws SystemException {
-        if (EntityState.INACTIVE.equals(state)) {
-            throw new SystemException("Entity with id[" + getId() + "] already deleted");
-        }
-        state = EntityState.INACTIVE;
-    }
-
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    @Override
+    public int hashCode() {
+        throw new UnsupportedOperationException("Should be implemented by subclass.");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        throw new UnsupportedOperationException("Should be implemented by subclass.");
+    }
+
+    @PrePersist
+    private void onPrePersist() {
+        setUniqueId();
+        setCreatedAuditInfo();
+        setUpdateAuditInfo();
+    }
+
+    @PreUpdate
+    private void onPreUpdate() {
+        setUpdateAuditInfo();
+    }
+
+    private void setUniqueId() {
+        id = uniqueId();
+    }
+
+    private void setCreatedAuditInfo() {
+        createdAt = now();
+        createdBy = SYSTEM;
+    }
+
+    private void setUpdateAuditInfo() {
+        updatedAt = now();
+        updatedBy = SYSTEM;
+    }
+
+    /*
+        public EntityState getState() {
+            return state;
+        }
+
+        public void onDelete() throws SystemException {
+            if (EntityState.INACTIVE.equals(state)) {
+                throw new SystemException("Entity with id[" + getId() + "] already deleted");
+            }
+            state = EntityState.INACTIVE;
+        }
+
+        public isActive() {
+            return EntityState.ACTIVE.equals(state);
+        }
+    */
 }

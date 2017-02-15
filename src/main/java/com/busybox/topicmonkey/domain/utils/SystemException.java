@@ -1,4 +1,4 @@
-package com.busybox.topicmonkey.domain;
+package com.busybox.topicmonkey.domain.utils;
 
 public class SystemException extends RuntimeException {
 

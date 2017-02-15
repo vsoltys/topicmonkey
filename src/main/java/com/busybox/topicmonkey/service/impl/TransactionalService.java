@@ -1,6 +1,6 @@
 package com.busybox.topicmonkey.service.impl;
 
-import com.busybox.topicmonkey.domain.SystemException;
+import com.busybox.topicmonkey.domain.utils.SystemException;
 import com.busybox.topicmonkey.domain.model.AbstractEntity;
 import com.busybox.topicmonkey.service.AbstractService;
 import org.springframework.data.jpa.repository.JpaRepository;

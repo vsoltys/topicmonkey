@@ -1,6 +1,6 @@
 package com.busybox.topicmonkey.service;
 
-import com.busybox.topicmonkey.domain.SystemException;
+import com.busybox.topicmonkey.domain.utils.SystemException;
 import com.busybox.topicmonkey.domain.model.AbstractEntity;
 
 import java.io.Serializable;
