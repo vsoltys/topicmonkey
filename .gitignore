@@ -12,6 +12,8 @@ hs_err_pid*
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+.idea/
+*.iml
 
 # User-specific stuff:
 .idea/workspace.xml
@@ -28,6 +30,19 @@ hs_err_pid*
 
 
 
-.idea/
-*.iml
-target/
+### Gradle template
+.gradle
+/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+/gradlew
+/gradlew.bat
+/gradle/
