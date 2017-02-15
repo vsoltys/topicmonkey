@@ -84,7 +84,7 @@ public class UserController {
         return response;
     }
 
-    private ResponseEntity toResponse(User updatedUser) {
-        return new ResponseEntity(userResourceAssembler.toResource(updatedUser), HttpStatus.OK);
+    private ResponseEntity toResponse(User user) {
+        return new ResponseEntity(userResourceAssembler.toResource(user), HttpStatus.OK);
     }
 }
