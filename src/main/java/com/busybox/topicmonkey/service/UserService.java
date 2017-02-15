@@ -3,8 +3,10 @@ package com.busybox.topicmonkey.service;
 import com.busybox.topicmonkey.domain.model.User;
 import org.springframework.stereotype.Service;
 
-@Service
-public interface UserService extends AbstractService<User, Long> {
+import java.util.Optional;
 
-    User findByLoginName(String loginName);
+@Service
+public interface UserService extends AbstractService<User, String> {
+
+    Optional<User> findByLoginName(String loginName);
 }

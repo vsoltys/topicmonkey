@@ -1,7 +1,7 @@
 package com.busybox.topicmonkey.service.impl;
 
-import com.busybox.topicmonkey.domain.utils.SystemException;
 import com.busybox.topicmonkey.domain.model.AbstractEntity;
+import com.busybox.topicmonkey.domain.utils.SystemException;
 import com.busybox.topicmonkey.service.AbstractService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +27,7 @@ public abstract class TransactionalService<E extends AbstractEntity, K extends S
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<E> findAll() {
         return getRepository().findAll();
     }
@@ -48,9 +49,9 @@ public abstract class TransactionalService<E extends AbstractEntity, K extends S
     public Optional<E> delete(final K id) {
         final E deleted = getRepository().findOne(id);
         if (deleted == null) {
-            Optional.empty();
+            return Optional.empty();
         }
-        deleted.onDelete();
+//        deleted.onDelete();
 
         getRepository().saveAndFlush(deleted);
         return Optional.of(deleted);

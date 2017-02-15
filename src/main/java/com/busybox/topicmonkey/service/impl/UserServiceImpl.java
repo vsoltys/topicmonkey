@@ -11,8 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import java.util.Optional;
+
 @Service
-public class UserServiceImpl extends TransactionalService<User, Long>
+@Transactional
+public class UserServiceImpl extends TransactionalService<User, String>
         implements UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -22,21 +25,14 @@ public class UserServiceImpl extends TransactionalService<User, Long>
 
     @Override
     @Transactional(readOnly = true)
-    public User findByLoginName(String loginName) {
+    public Optional<User> findByLoginName(String loginName) {
         Assert.hasLength(loginName);
         log.debug("Searching user by loginName: {}", loginName);
-
-        // TODO: update after repository
-//        return repository.findByLoginName(loginName);
-        return null;
+        return repository.findByLoginName(loginName);
     }
 
     @Override
-    protected JpaRepository<User, Long> getRepository() {
+    protected JpaRepository<User, String> getRepository() {
         return repository;
-    }
-
-    public void setRepository(UserRepository repository) {
-        this.repository = repository;
     }
 }
