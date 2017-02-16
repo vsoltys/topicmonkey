@@ -40,23 +40,25 @@ repositories {
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.springframework.boot:spring-boot-starter-batch"
-    compile "org.springframework.boot:spring-boot-starter-hateoas"
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot:spring-boot-devtools"
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-batch'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-hateoas'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
 
-    compile "com.h2database:h2"
-    compile "com.zaxxer:HikariCP:2.5.1"
-    compile "org.liquibase:liquibase-core:3.4.1"
-    compile "joda-time:joda-time:1.4"
-    compile "joda-time:joda-time-hibernate:1.4"
-    compile "org.apache.commons:commons-lang3:3.1"
+    compile group: 'com.h2database', name: 'h2'
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.5.1'
+    compile group: 'org.liquibase', name: 'liquibase-core', version: '3.4.1'
 
-    testCompile "junit:junit"
-    testCompile "org.mockito:mockito-core:1.+"
-    testCompile "org.springframework.batch:spring-batch-test"
+    compile group: 'joda-time', name: 'joda-time', version: '1.4'
+    compile group: 'joda-time', name: 'joda-time-hibernate', version: '1.4'
+
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.1'
+
+    testCompile group: 'junit', name: 'junit'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
+    testCompile group: 'org.springframework.batch', name: 'spring-batch-test'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.1.RELEASE'
 }
 
