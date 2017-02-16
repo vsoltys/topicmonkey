@@ -19,7 +19,7 @@ public class SearchEntryResourceAssembler implements ResourceAssembler<SearchEnt
     @Override
     public Resource<SearchEntry> toResource(SearchEntry entry) {
         Resource<SearchEntry> resource = new Resource(entry);
-        resource.add(linkTo(methodOn(controllerClass).get(entry.getId())).withSelfRel());
+        resource.add(linkTo(methodOn(controllerClass).getAllByUser(entry.getUser().getId())).withSelfRel());
         return resource;
     }
 }

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @ExposesResourceFor(SearchEntry.class)
-@RequestMapping(value = RestApiUrls.SEARCH_ENTRY_ROOT, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = RestApiUrls.SEARCH_ENTRIES_ROOT, produces = MediaType.APPLICATION_JSON_VALUE)
 public class SearchEntryController {
 
     @Resource
@@ -29,20 +29,20 @@ public class SearchEntryController {
     @Resource
     private SearchEntryResourceAssembler searchEntryResourceAssembler;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public HttpEntity<SearchEntry> get(@PathVariable("id") String userId) {
+    @RequestMapping(value = "/{searchEntry}", method = RequestMethod.GET)
+    public HttpEntity<SearchEntry> getSearchEntry(@PathVariable("searchEntry") String searchEntryId) {
         ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
-        Optional<SearchEntry> searchEntry = searchEntryService.findById(userId);
+        Optional<SearchEntry> searchEntry = searchEntryService.findById(searchEntryId);
         if (searchEntry.isPresent()) {
             response = toResponse(searchEntry.get());
         }
         return response;
     }
 
-    @RequestMapping(value = RestApiUrls.ALL, method = RequestMethod.GET)
-    public HttpEntity<SearchEntry> getAll() {
+    @RequestMapping(method = RequestMethod.GET)
+    public HttpEntity<SearchEntry> getAllByUser(@PathVariable("user") String userId) {
         List<org.springframework.hateoas.Resource<SearchEntry>> searchEntries = searchEntryService
-                .findAll()
+                .findAllByUserId(userId)
                 .stream()
                 .map(searchEntry -> searchEntryResourceAssembler.toResource(searchEntry))
                 .collect(Collectors.toList());
@@ -51,16 +51,18 @@ public class SearchEntryController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public HttpEntity<SearchEntry> create(@RequestBody SearchEntry searchEntry) {
-        return toResponse(searchEntryService.create(SearchEntry
-                .builder()
-                .withName(searchEntry.getName())
-                .withContent(searchEntry.getContent())
-                .build()));
+    public HttpEntity<SearchEntry> addSearchEntryForUser(@PathVariable("user") String userId,
+                                                         @RequestBody SearchEntry searchEntry) {
+        ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
+        Optional<SearchEntry> result = searchEntryService.addSearchEntryForUser(userId, searchEntry);
+        if (result.isPresent()) {
+            response = toResponse(result.get());
+        }
+        return response;
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public HttpEntity<SearchEntry> delete(@PathVariable("id") String searchEntryId) {
+    @RequestMapping(value = "/{searchEntry}", method = RequestMethod.DELETE)
+    public HttpEntity<SearchEntry> deleteSearchEntry(@PathVariable("searchEntry") String searchEntryId) {
         ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
         Optional<SearchEntry> searchEntry = searchEntryService.delete(searchEntryId);
         if (searchEntry.isPresent()) {
