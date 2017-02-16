@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,7 +23,14 @@ public interface SearchEntryRepository extends JpaRepository<SearchEntry, String
      * @return A searchEntry which name is an exact match with the given name.
      * If no searchEntry is found, this method returns a null.
      */
-
-    @Query(value = "SELECT se FROM search_entry u WHERE se.name=:name", nativeQuery = true)
     Optional<SearchEntry> findByName(@Param("name") String name);
+
+    /**
+     * Finds all searchEntry items for a user by using the user's id as a search criteria.
+     *
+     * @param userId
+     * @return A list of searchEntry items by user id.
+     * If no searchEntry is found, this method returns an empty list.
+     */
+    List<SearchEntry> findAllByUserId(@Param("userId") String userId);
 }
