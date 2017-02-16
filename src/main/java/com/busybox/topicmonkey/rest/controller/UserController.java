@@ -25,7 +25,7 @@ import com.busybox.topicmonkey.service.UserService;
 
 @RestController
 @ExposesResourceFor(User.class)
-@RequestMapping(value = RestApiUrls.USER_ROOT, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = RestApiUrls.USERS_ROOT, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController {
 
     @Resource
@@ -34,8 +34,8 @@ public class UserController {
     @Resource
     private UserResourceAssembler userResourceAssembler;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public HttpEntity<User> get(@PathVariable("id") String userId) {
+    @RequestMapping(value = "/{user}", method = RequestMethod.GET)
+    public HttpEntity<User> get(@PathVariable("user") String userId) {
         ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
         Optional<User> user = userService.findById(userId);
         if (user.isPresent()) {
@@ -44,16 +44,16 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping(value = RestApiUrls.ALL, method = RequestMethod.GET)
-    public HttpEntity<User> getAll() {
-        List<org.springframework.hateoas.Resource<User>> users = userService
-                .findAll()
-                .stream()
-                .map(user -> userResourceAssembler.toResource(user))
-                .collect(Collectors.toList());
-
-        return new ResponseEntity(users, HttpStatus.OK);
-    }
+//    @RequestMapping(value = RestApiUrls.ALL, method = RequestMethod.GET)
+//    public HttpEntity<User> getAll() {
+//        List<org.springframework.hateoas.Resource<User>> users = userService
+//                .findAll()
+//                .stream()
+//                .map(user -> userResourceAssembler.toResource(user))
+//                .collect(Collectors.toList());
+//
+//        return new ResponseEntity(users, HttpStatus.OK);
+//    }
 
     @RequestMapping(method = RequestMethod.GET)
     public HttpEntity<User> getUserByLoginName(@RequestParam("loginName") String loginName) {
@@ -74,8 +74,8 @@ public class UserController {
                 .build()));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public HttpEntity<User> delete(@PathVariable("id") String userId) {
+    @RequestMapping(value = "/{user}", method = RequestMethod.DELETE)
+    public HttpEntity<User> delete(@PathVariable("user") String userId) {
         ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
         Optional<User> user = userService.delete(userId);
         if (user.isPresent()) {
