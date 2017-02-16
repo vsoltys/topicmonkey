@@ -52,6 +52,7 @@ dependencies {
     compile "org.liquibase:liquibase-core:3.4.1"
     compile "joda-time:joda-time:1.4"
     compile "joda-time:joda-time-hibernate:1.4"
+    compile "org.apache.commons:commons-lang3:3.1"
 
     testCompile "junit:junit"
     testCompile "org.mockito:mockito-core:1.+"
