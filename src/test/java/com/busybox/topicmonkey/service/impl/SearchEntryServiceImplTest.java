@@ -1,7 +1,12 @@
 package com.busybox.topicmonkey.service.impl;
 
-import com.busybox.topicmonkey.domain.model.SearchEntry;
-import com.busybox.topicmonkey.domain.repository.SearchEntryRepository;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
+
+import java.util.Optional;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,12 +14,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Optional;
-
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
+import com.busybox.topicmonkey.domain.model.SearchEntry;
+import com.busybox.topicmonkey.domain.model.User;
+import com.busybox.topicmonkey.domain.repository.SearchEntryRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SearchEntryServiceImplTest {
@@ -47,6 +49,15 @@ public class SearchEntryServiceImplTest {
     }
 
     private SearchEntry prepareSearchEntry() {
-        return SearchEntry.builder().withName("test_name").withContent("test_content").build();
+        User user = User.builder()
+                .withLoginName("test")
+                .withEmailAddress("email@test.com")
+                .build();
+
+        return SearchEntry.builder()
+                .withName("test_name")
+                .withContent("test_content")
+                .withUser(user)
+                .build();
     }
 }

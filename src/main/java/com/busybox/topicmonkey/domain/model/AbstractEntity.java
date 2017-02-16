@@ -34,6 +34,7 @@ public abstract class AbstractEntity
     private String updatedBy;
 
 /*
+    // TODO: deactivate entry but keep in database for housekeeping (cleanup/maintenance) job
     @Enumerated(EnumType.STRING)
     @Column(name = "STATE", nullable = false)
     private EntityState state = EntityState.ACTIVE;
@@ -64,13 +65,20 @@ public abstract class AbstractEntity
     }
 
     @Override
-    public int hashCode() {
-        throw new UnsupportedOperationException("Should be implemented by subclass.");
+    public boolean equals(Object o) {
+        // TODO: depends on entities processing strategy - unique by id or other fields
+        //throw new UnsupportedOperationException("Should be implemented by subclass.");
+        if (this == o) return true;
+        if (!(o instanceof AbstractEntity)) return false;
+
+        AbstractEntity that = (AbstractEntity) o;
+        return id.equals(that.id);
     }
 
     @Override
-    public boolean equals(Object o) {
-        throw new UnsupportedOperationException("Should be implemented by subclass.");
+    public int hashCode() {
+        //throw new UnsupportedOperationException("Should be implemented by subclass.");
+        return id.hashCode();
     }
 
     @PrePersist
@@ -115,4 +123,6 @@ public abstract class AbstractEntity
             return EntityState.ACTIVE.equals(state);
         }
     */
+
+    // TODO: add cloneable/merge support
 }
