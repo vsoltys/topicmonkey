@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="update-search-entry-table" author="system">
+        <addColumn tableName="SEARCH_ENTRY">
+            <column name="USER_ID" type="varchar(36)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="SEARCH_ENTRY"
+                                 constraintName="fk_search_entry_user"
+                                 referencedColumnNames="ID" referencedTableName="USER"/>
+
+        <rollback>
+            <dropUniqueConstraint constraintName="fk_search_entry_user"
+                                  tableName="SEARCH_ENTRY"/>
+
+            <dropColumn tableName="SEARCH_ENTRY"
+                        columnName="USER_ID"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
